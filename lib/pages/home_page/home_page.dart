@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
                 ),
                 BottomAppBarElement(
                   icon: Icons.calendar_month,
-                  title: 'Calendar',
+                  title: 'Schedule',
                   onTap: () {},
                 ),
               ],
