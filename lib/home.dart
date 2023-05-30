@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_manager/UI/buttons/play_button.dart';
 import 'package:task_manager/bloc/page_controller/page_controller_bloc.dart';
 import 'package:task_manager/data/models/page_model.dart';
 import 'package:task_manager/data/models/widgets_models/bottom_app_bar_item_model.dart';
@@ -28,24 +27,6 @@ class _HomeState extends State<Home> {
     return BlocBuilder<PageControllerBloc, PageModel>(
       builder: (context, state) {
         return Scaffold(
-            appBar: AppBar(
-              backgroundColor: CustomColors.appBarColor,
-              title: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        width: 25,
-                      ),
-                      const Text('Work harder gain more'),
-                      PlayButton(
-                        onTap: () {},
-                        size: 30,
-                      ),
-                    ],
-                  )),
-            ),
             body: PageView(
               controller: state.controller,
               // physics: NeverScrollableScrollPhysics(),

@@ -1,10 +1,11 @@
 import 'package:task_manager/data/models/task_model.dart';
 
 class Story {
-  String title;
+  String id;
+  String name;
   List<Task> tasks;
 
-  Story({required this.title, this.tasks = const []});
+  Story({required this.id, required this.name, this.tasks = const []});
 
   void addTask(Task task) {
     tasks.add(task);
@@ -17,6 +18,6 @@ class Story {
   @override
   String toString() {
     String taskList = tasks.map((task) => '- ${task.title}').join('\n');
-    return 'Story: $title\nTasks:\n$taskList';
+    return 'Story ID: $id\nName: $name\nTasks:\n$taskList';
   }
 }

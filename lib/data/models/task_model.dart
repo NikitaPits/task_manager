@@ -4,6 +4,7 @@ class Task {
   String description;
   DateTime dueDate;
   bool isCompleted;
+  double spentTime;
 
   Task({
     required this.id,
@@ -11,6 +12,7 @@ class Task {
     this.description = '',
     required this.dueDate,
     this.isCompleted = false,
+    this.spentTime = 0,
   });
 
   void complete() {
@@ -33,6 +35,10 @@ class Task {
     dueDate = newDueDate;
   }
 
+  void updateSpentTime(double newSpentTime) {
+    spentTime = newSpentTime;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -40,6 +46,7 @@ class Task {
       'description': description,
       'dueDate': dueDate.toIso8601String(),
       'isCompleted': isCompleted,
+      'spentTime': spentTime,
     };
   }
 
@@ -50,11 +57,12 @@ class Task {
       description: map['description'],
       dueDate: DateTime.parse(map['dueDate']),
       isCompleted: map['isCompleted'],
+      spentTime: map['spentTime'],
     );
   }
 
   @override
   String toString() {
-    return 'Task: $title\nDescription: $description\nDue Date: $dueDate\nCompleted: $isCompleted';
+    return 'Task: $title\nDescription: $description\nDue Date: $dueDate\nCompleted: $isCompleted\nSpent Time: $spentTime hours';
   }
 }
