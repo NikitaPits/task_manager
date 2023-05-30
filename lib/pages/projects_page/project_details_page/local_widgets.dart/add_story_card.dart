@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/data/models/story_model.dart';
+import 'package:task_manager/theme/custom_colors.dart';
 import 'package:uuid/uuid.dart';
 
 class AddStoryCard extends StatelessWidget {
@@ -10,7 +11,7 @@ class AddStoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.grey[300],
+      color: CustomColors.createWidgetBgColor,
       child: InkWell(
         onTap: () {
           _showAddStoryDialog(context);
@@ -51,17 +52,27 @@ class AddStoryCard extends StatelessWidget {
           ),
           actions: [
             TextButton(
+              style: ButtonStyle(
+                  textStyle: MaterialStateProperty.all(
+                      const TextStyle(color: CustomColors.subTextColor)),
+                  backgroundColor: MaterialStateProperty.all(
+                      CustomColors.createWidgetBgColor)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+              ),
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      CustomColors.createWidgetBgColor)),
               onPressed: () {
                 String name = nameController.text;
                 double timeSpent = double.tryParse(timeController.text) ?? 0;
 
-                String storyId = Uuid().v4();
+                String storyId = const Uuid().v4();
                 Story newStory =
                     Story(id: storyId, name: name, timeSpent: timeSpent);
                 onStoryAdded(newStory);
