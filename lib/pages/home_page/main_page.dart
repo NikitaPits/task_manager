@@ -11,7 +11,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text('Main page'),
+      body: Center(child: Text('Main page')),
     );
   }
 }
