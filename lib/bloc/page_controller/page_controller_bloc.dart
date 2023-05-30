@@ -12,7 +12,7 @@ class PageControllerBloc extends Bloc<PageControllerEvent, PageModel> {
       state.controller.animateToPage(
         event.pageIndex,
         duration: const Duration(milliseconds: 200),
-        curve: Curves.easeIn,
+        curve: Curves.ease,
       );
       emit(
         state.copyWith(

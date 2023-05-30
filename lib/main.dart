@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/bloc/page_controller/page_controller_bloc.dart';
+import 'package:task_manager/bloc/projects/projects_bloc.dart';
 import 'package:task_manager/home.dart';
 
 void main() {
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (BuildContext context) => ProjectsBloc(),
+        ),
         BlocProvider(
           create: (BuildContext context) => PageControllerBloc(),
         )

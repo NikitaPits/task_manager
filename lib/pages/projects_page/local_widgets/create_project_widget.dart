@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager/bloc/projects/projects_bloc.dart';
 import 'package:task_manager/data/models/project_model.dart';
 import 'package:task_manager/helpers/save_project.dart';
+import 'package:task_manager/theme/custom_colors.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateProjectWidget extends StatefulWidget {
   const CreateProjectWidget({Key? key}) : super(key: key);
 
   @override
-  _CreateProjectWidgetState createState() => _CreateProjectWidgetState();
+  State<CreateProjectWidget> createState() => _CreateProjectWidgetState();
 }
 
 class _CreateProjectWidgetState extends State<CreateProjectWidget> {
@@ -31,11 +34,13 @@ class _CreateProjectWidgetState extends State<CreateProjectWidget> {
         });
       },
       child: const Card(
+        color: CustomColors.createWidgetBgColor,
         elevation: 2.0,
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.add, size: 48.0),
               SizedBox(height: 8.0),
@@ -63,6 +68,9 @@ class _CreateProjectWidgetState extends State<CreateProjectWidget> {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      CustomColors.createWidgetBgColor)),
               onPressed: () {
                 String projectName = _nameController.text.trim();
                 if (projectName.isNotEmpty) {
@@ -71,7 +79,10 @@ class _CreateProjectWidgetState extends State<CreateProjectWidget> {
                     name: projectName,
                   );
                   saveProjectsToLocalStorage(newProject);
-                  Navigator.pop(context, newProject);
+                  setState(() {
+                    _isFlipped = false;
+                  });
+                  context.read<ProjectsBloc>().add(GetProjectsEvent());
                 } else {
                   showDialog(
                     context: context,

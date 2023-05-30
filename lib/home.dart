@@ -6,7 +6,6 @@ import 'package:task_manager/data/models/widgets_models/bottom_app_bar_item_mode
 import 'package:task_manager/pages/home_page/local_widgets/bottum_app_bar_element.dart';
 import 'package:task_manager/pages/home_page/main_page.dart';
 import 'package:task_manager/pages/projects_page/projects_page.dart';
-import 'package:task_manager/pages/schedule_page/schedule_page.dart';
 import 'package:task_manager/theme/custom_colors.dart';
 
 class Home extends StatefulWidget {
@@ -20,7 +19,7 @@ class _HomeState extends State<Home> {
   final List<BottomAppBarModel> bottomAppBarParameters = [
     BottomAppBarModel(Icons.home, 'Main'),
     BottomAppBarModel(Icons.notes, 'Projects'),
-    BottomAppBarModel(Icons.calendar_month, 'Schedule')
+    // BottomAppBarModel(Icons.calendar_month, 'Schedule')
   ];
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class _HomeState extends State<Home> {
               children: const [
                 MainPage(),
                 ProjectsPage(),
-                SchedulePage(),
+                // SchedulePage(),
               ],
             ),
             bottomNavigationBar: SizedBox(
@@ -47,7 +46,7 @@ class _HomeState extends State<Home> {
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 8),
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children:
                           bottomAppBarParameters.asMap().entries.map((entry) {
                         final index = entry.key;
