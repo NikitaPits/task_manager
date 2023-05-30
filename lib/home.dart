@@ -30,16 +30,19 @@ class _HomeState extends State<Home> {
         return Scaffold(
             appBar: AppBar(
               backgroundColor: CustomColors.appBarColor,
-              title: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+              title: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 25,
                       ),
-                      Text('Hello'),
-                      PlayButton(),
+                      const Text('Work harder gain more'),
+                      PlayButton(
+                        onTap: () {},
+                        size: 30,
+                      ),
                     ],
                   )),
             ),
@@ -58,8 +61,10 @@ class _HomeState extends State<Home> {
             bottomNavigationBar: SizedBox(
               height: 100,
               child: BottomAppBar(
+                color: CustomColors.appBarColor,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 8),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children:

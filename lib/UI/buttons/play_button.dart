@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 
 class PlayButton extends StatelessWidget {
-  const PlayButton({super.key});
+  final void Function() onTap;
+  final double? size;
+  const PlayButton({super.key, required this.onTap, this.size});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 25,
-      height: 25,
-      decoration: BoxDecoration(
-        color: Colors.green,
-        borderRadius: BorderRadius.circular(25),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: size ?? 25,
+        height: size ?? 25,
+        decoration: BoxDecoration(
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: const Icon(Icons.play_arrow_rounded),
       ),
-      child: const Icon(Icons.play_arrow_rounded),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/theme/custom_colors.dart';
 
 class BottomAppBarElement extends StatelessWidget {
   final IconData icon;
@@ -20,8 +21,16 @@ class BottomAppBarElement extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon),
-            Text(title),
+            Icon(
+              icon,
+              color: CustomColors.white,
+            ),
+            Text(
+              title,
+              style: const TextStyle(
+                color: CustomColors.white,
+              ),
+            ),
           ],
         ),
       ),
