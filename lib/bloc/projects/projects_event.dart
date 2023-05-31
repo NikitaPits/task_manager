@@ -4,3 +4,9 @@ part of 'projects_bloc.dart';
 abstract class ProjectsEvent {}
 
 class GetProjectsEvent extends ProjectsEvent {}
+
+class DeleteProjectEvent extends ProjectsEvent {
+  final String projectId;
+
+  DeleteProjectEvent(this.projectId);
+}

@@ -27,10 +27,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
         title: const Center(child: Text('Projects')),
       ),
       body: Padding(
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.width / 30,
-          right: MediaQuery.of(context).size.width / 30,
-          left: MediaQuery.of(context).size.width / 30,
+        padding: EdgeInsets.all(
+          MediaQuery.of(context).size.width / 30,
         ),
         child: BlocBuilder<ProjectsBloc, ProjectsState>(
           builder: (context, state) {
@@ -47,7 +45,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
-                      childAspectRatio: 2 / 1.6,
+                      childAspectRatio: 2 / 2,
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {

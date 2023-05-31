@@ -57,3 +57,21 @@ Future<void> updateProjectById(String projectId, Project updatedProject) async {
   String projectsJson = jsonEncode(projectList);
   await prefs.setString('projects', projectsJson);
 }
+
+Future<void> deleteProjectById(String projectId) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  List<Project> savedProjects = await getProjectsFromLocalStorage();
+
+  savedProjects.removeWhere((project) => project.id == projectId);
+
+  List<Map<String, dynamic>> projectList = savedProjects.map((project) {
+    return {
+      'id': project.id,
+      'name': project.name,
+      'timeSpent': project.spentTime,
+    };
+  }).toList();
+
+  String projectsJson = jsonEncode(projectList);
+  await prefs.setString('projects', projectsJson);
+}

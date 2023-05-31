@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager/bloc/projects/projects_bloc.dart';
 import 'package:task_manager/data/models/project_model.dart';
 import 'package:task_manager/pages/projects_page/project_details_page/project_details_page.dart';
 import 'package:task_manager/theme/custom_colors.dart';
@@ -59,6 +61,40 @@ class ProjectCard extends StatelessWidget {
                 'Time Spent: ${project.spentTime}',
                 style: const TextStyle(
                     fontSize: 14.0, color: CustomColors.subTextColor),
+              ),
+              const SizedBox(height: 12.0),
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Delete Project'),
+                        content: const Text(
+                            'Are you sure you want to delete this project?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Cancel'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              context
+                                  .read<ProjectsBloc>()
+                                  .add(DeleteProjectEvent(project.id));
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Delete'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(primary: Colors.red),
+                child: const Text('Delete Project'),
               ),
             ],
           ),
