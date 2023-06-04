@@ -1,7 +1,8 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager/bloc/projects/projects_bloc.dart';
 import 'package:task_manager/data/models/project_model.dart';
 import 'package:task_manager/helpers/manage_projects.dart';
 
@@ -26,7 +27,7 @@ class ProjectDetailsBloc
         emit(ProjectLoadingFailed());
       }
     });
-    on<UpdateProjectDetails>((event, emit) async {
+    on<UpdateProjectDetailsEvent>((event, emit) async {
       try {
         emit(ProjectUpdating());
         await updateProjectById(event.project.id, event.project);
@@ -34,6 +35,9 @@ class ProjectDetailsBloc
         Project? project = await getProjectById(event.project.id);
         if (project != null) {
           emit(ProjectLoaded(project));
+          if (event.mounted) {
+            event.context.read<ProjectsBloc>().add(GetProjectsEvent());
+          }
         } else {
           emit(ProjectLoadingFailed());
         }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/bloc/projects/projects_bloc.dart';
 import 'package:task_manager/data/models/project_model.dart';
-import 'package:task_manager/pages/projects_page/project_details_page/project_details_page.dart';
+import 'package:task_manager/pages/project_details_page/project_details_page.dart';
 import 'package:task_manager/theme/custom_colors.dart';
 
 class ProjectCard extends StatelessWidget {

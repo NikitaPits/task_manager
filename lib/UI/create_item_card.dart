@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/data/models/story_model.dart';
 import 'package:task_manager/theme/custom_colors.dart';
-import 'package:uuid/uuid.dart';
 
-class AddStoryCard extends StatelessWidget {
-  final Function(Story) onStoryAdded;
+class CreateItemPopUp extends StatelessWidget {
+  final String title;
+  final Function(String) onCreate;
 
-  const AddStoryCard({Key? key, required this.onStoryAdded}) : super(key: key);
+  const CreateItemPopUp({Key? key, required this.title, required this.onCreate})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,6 @@ class AddStoryCard extends StatelessWidget {
 
   Future<void> _showAddStoryDialog(BuildContext context) async {
     TextEditingController nameController = TextEditingController();
-    TextEditingController timeController = TextEditingController();
 
     await showDialog(
       context: context,
@@ -76,15 +75,7 @@ class AddStoryCard extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.all(
                       CustomColors.createWidgetBgColor)),
               onPressed: () {
-                String name = nameController.text;
-                double timeSpent = double.tryParse(timeController.text) ?? 0;
-
-                String storyId = const Uuid().v4();
-                Story newStory =
-                    Story(id: storyId, name: name, timeSpent: timeSpent);
-                onStoryAdded(newStory);
-
-                Navigator.of(context).pop();
+                onCreate(nameController.text);
               },
               child: const Text('Add'),
             ),

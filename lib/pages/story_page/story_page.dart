@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager/UI/create_item_card.dart';
 import 'package:task_manager/bloc/project_details/project_details_bloc.dart';
-import 'package:task_manager/pages/projects_page/project_details_page/local_widgets.dart/add_story_card.dart';
-import 'package:task_manager/pages/projects_page/project_details_page/local_widgets.dart/story_card.dart';
+import 'package:task_manager/pages/project_details_page/local_widgets.dart/story_card.dart';
 import 'package:task_manager/theme/custom_colors.dart';
 
-class ProjectDetailsPage extends StatefulWidget {
+class StoryPage extends StatefulWidget {
   final String projectId;
 
-  const ProjectDetailsPage({Key? key, required this.projectId})
-      : super(key: key);
+  const StoryPage({Key? key, required this.projectId}) : super(key: key);
 
   @override
-  State<ProjectDetailsPage> createState() => _ProjectDetailsPageState();
+  State<StoryPage> createState() => _StoryPageState();
 }
 
-class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
+class _StoryPageState extends State<StoryPage> {
   @override
   void initState() {
     context.read<ProjectDetailsBloc>().add(LoadProjectEvent(widget.projectId));
@@ -69,15 +68,9 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         ...state.selectedProject.stories
                             .map((story) => StoryCard(story: story))
                             .toList(),
-                        AddStoryCard(
-                          onStoryAdded: (story) {
-                            context.read<ProjectDetailsBloc>().add(
-                                    UpdateProjectDetails(state.selectedProject
-                                        .copyWith(stories: [
-                                  ...state.selectedProject.stories,
-                                  story
-                                ])));
-                          },
+                        CreateItemPopUp(
+                          title: 'Add a task',
+                          onCreate: onCreateTask,
                         ),
                       ],
                     ),
@@ -95,4 +88,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       ),
     );
   }
+
+  onCreateTask(name) {}
 }

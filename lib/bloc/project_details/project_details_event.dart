@@ -9,8 +9,10 @@ class LoadProjectEvent extends ProjectDetailsEvent {
   LoadProjectEvent(this.projectId);
 }
 
-class UpdateProjectDetails extends ProjectDetailsEvent {
+class UpdateProjectDetailsEvent extends ProjectDetailsEvent {
   final Project project;
+  final BuildContext context;
+  final bool mounted;
 
-  UpdateProjectDetails(this.project);
+  UpdateProjectDetailsEvent(this.project, this.context, this.mounted);
 }
