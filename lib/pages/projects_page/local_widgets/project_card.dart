@@ -29,7 +29,7 @@ class ProjectCard extends StatelessWidget {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ProjectDetailsPage(
-            project: project,
+            projectId: project.id,
           );
         }));
       },

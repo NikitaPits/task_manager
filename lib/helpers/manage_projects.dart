@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/data/models/project_model.dart';
@@ -20,30 +21,36 @@ Future<void> saveProjectsToLocalStorage(Project project) async {
 }
 
 Future<List<Project>> getProjectsFromLocalStorage() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String projectsJson = prefs.getString('projects') ?? '';
-  if (projectsJson.isNotEmpty) {
-    List<dynamic> projectList = jsonDecode(projectsJson);
-    List<Project> projects = projectList.map((project) {
-      List<dynamic> storyList = project['stories'] ?? [];
-      List<Story> stories = storyList.map((story) {
-        return Story(
-          id: story['id'],
-          name: story['name'],
-          // Add other story fields here
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String projectsJson = prefs.getString('projects') ?? '';
+    if (projectsJson.isNotEmpty) {
+      List<dynamic> projectList = jsonDecode(projectsJson);
+
+      List<Project> projects = projectList.map((project) {
+        List<dynamic> storyList = project['stories'] ?? [];
+        List<Story> stories = storyList.map((story) {
+          return Story(
+            id: story['id'],
+            name: story['name'],
+            // Add other story fields here
+          );
+        }).toList();
+
+        return Project(
+          id: project['id'],
+          name: project['name'],
+          stories: stories,
+          spentTime: project['spentTime'] ?? 0,
+          // Add other project fields here
         );
       }).toList();
-
-      return Project(
-        id: project['id'],
-        name: project['name'],
-        stories: stories,
-        spentTime: project['spentTime'],
-        // Add other project fields here
-      );
-    }).toList();
-    return projects;
-  } else {
+      return projects;
+    } else {
+      return [];
+    }
+  } catch (e) {
+    log(e.toString());
     return [];
   }
 }
@@ -94,4 +101,19 @@ Future<void> deleteProjectById(String projectId) async {
 
   String projectsJson = jsonEncode(projectList);
   await prefs.setString('projects', projectsJson);
+}
+
+Future<Project?> getProjectById(String projectId) async {
+  List<Project> savedProjects = await getProjectsFromLocalStorage();
+
+  Project? foundProject;
+
+  for (Project project in savedProjects) {
+    if (project.id == projectId) {
+      foundProject = project;
+      break;
+    }
+  }
+
+  return foundProject;
 }
