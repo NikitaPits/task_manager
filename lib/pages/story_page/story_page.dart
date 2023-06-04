@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/UI/create_item_card.dart';
 import 'package:task_manager/bloc/project_details/project_details_bloc.dart';
+import 'package:task_manager/bloc/story_details/story_details_bloc.dart';
+import 'package:task_manager/data/models/story_model.dart';
 import 'package:task_manager/pages/project_details_page/local_widgets.dart/story_card.dart';
 import 'package:task_manager/theme/custom_colors.dart';
 
 class StoryPage extends StatefulWidget {
-  final String projectId;
+  final Story stroy;
 
-  const StoryPage({Key? key, required this.projectId}) : super(key: key);
+  const StoryPage({Key? key, required this.stroy}) : super(key: key);
 
   @override
   State<StoryPage> createState() => _StoryPageState();
@@ -17,7 +19,7 @@ class StoryPage extends StatefulWidget {
 class _StoryPageState extends State<StoryPage> {
   @override
   void initState() {
-    context.read<ProjectDetailsBloc>().add(LoadProjectEvent(widget.projectId));
+    context.read<StoryDetailsBloc>().add(LoadProjectEvent(widget.projectId));
     super.initState();
   }
 

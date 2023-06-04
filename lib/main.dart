@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/bloc/page_controller/page_controller_bloc.dart';
 import 'package:task_manager/bloc/project_details/project_details_bloc.dart';
 import 'package:task_manager/bloc/projects/projects_bloc.dart';
+import 'package:task_manager/bloc/story_details/story_details_bloc.dart';
 import 'package:task_manager/home.dart';
 
 void main() {
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (BuildContext context) => ProjectDetailsBloc(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => StoryDetailsBloc(),
         ),
         BlocProvider(
           create: (BuildContext context) => ProjectsBloc(),
