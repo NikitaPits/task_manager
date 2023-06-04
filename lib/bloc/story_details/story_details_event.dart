@@ -5,8 +5,9 @@ abstract class StoryDetailsEvent {}
 
 class LoadStoryEvent extends StoryDetailsEvent {
   final String stroyId;
+  final Project project;
 
-  LoadStoryEvent(this.stroyId);
+  LoadStoryEvent(this.stroyId, this.project);
 }
 
 class UpdateProjectDetailsEvent extends StoryDetailsEvent {
