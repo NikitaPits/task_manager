@@ -12,6 +12,10 @@ class AddStoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: CustomColors.createWidgetBgColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        side: BorderSide(color: Colors.grey.withOpacity(0.4), width: 1.0),
+      ),
       child: InkWell(
         onTap: () {
           _showAddStoryDialog(context);
@@ -53,10 +57,13 @@ class AddStoryCard extends StatelessWidget {
           actions: [
             TextButton(
               style: ButtonStyle(
-                  textStyle: MaterialStateProperty.all(
-                      const TextStyle(color: CustomColors.subTextColor)),
-                  backgroundColor: MaterialStateProperty.all(
-                      CustomColors.createWidgetBgColor)),
+                textStyle: MaterialStateProperty.all(
+                  const TextStyle(color: CustomColors.subTextColor),
+                ),
+                backgroundColor: MaterialStateProperty.all(
+                  CustomColors.createWidgetBgColor,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },

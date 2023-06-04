@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager/bloc/projects/projects_bloc.dart';
 import 'package:task_manager/data/models/project_model.dart';
 import 'package:task_manager/pages/projects_page/project_details_page/local_widgets.dart/add_story_card.dart';
+import 'package:task_manager/pages/projects_page/project_details_page/local_widgets.dart/story_card.dart';
 import 'package:task_manager/theme/custom_colors.dart';
 
 class ProjectDetailsPage extends StatelessWidget {
@@ -45,47 +48,20 @@ class ProjectDetailsPage extends StatelessWidget {
             ),
             const SizedBox(height: 8.0),
             Expanded(
-              child: ListView.builder(
-                itemCount: project.stories.length + 1,
-                itemBuilder: (context, index) {
-                  if (index < project.stories.length) {
-                    final story = project.stories[index];
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Story ${index + 1}',
-                          style: const TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: story.tasks.length,
-                          itemBuilder: (context, taskIndex) {
-                            final task = story.tasks[taskIndex];
-                            return ListTile(
-                              title: Text(task.title),
-                              subtitle: Text(
-                                'Time Spent: ${task.spentTime}',
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 8.0),
-                      ],
-                    );
-                  } else {
-                    return AddStoryCard(
-                      onStoryAdded: (story) {
-                        // Обработчик добавления истории
-                      },
-                    );
-                  }
-                },
+              child: Wrap(
+                spacing: 16.0,
+                runSpacing: 16.0,
+                children: [
+                  ...project.stories
+                      .map((story) => StoryCard(story: story))
+                      .toList(),
+                  AddStoryCard(
+                    onStoryAdded: (story) {
+                      context.read<ProjectsBloc>().add(UpdateProject(project
+                          .copyWith(stories: [...project.stories, story])));
+                    },
+                  ),
+                ],
               ),
             ),
           ],

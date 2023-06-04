@@ -28,76 +28,96 @@ class ProjectCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ProjectDetailsPage(project: project);
+          return ProjectDetailsPage(
+            project: project,
+          );
         }));
       },
-      child: Card(
-        color: CustomColors.widgetsBgColor,
-        elevation: 2.0,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                project.name,
-                style: const TextStyle(
-                    fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 6.0),
-              Text(
-                'Story Count: $storyCount',
-                style: const TextStyle(
-                    fontSize: 14.0, color: CustomColors.subTextColor),
-              ),
-              const SizedBox(height: 6.0),
-              Text(
-                'Task Count: $completedTasks/$taskCount',
-                style: const TextStyle(
-                    fontSize: 14.0, color: CustomColors.subTextColor),
-              ),
-              const SizedBox(height: 6.0),
-              Text(
-                'Time Spent: ${project.spentTime}',
-                style: const TextStyle(
-                    fontSize: 14.0, color: CustomColors.subTextColor),
-              ),
-              const SizedBox(height: 12.0),
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Delete Project'),
-                        content: const Text(
-                            'Are you sure you want to delete this project?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('Cancel'),
+      child: Container(
+        width: 250,
+        decoration: BoxDecoration(
+          color: CustomColors.widgetsBgColor,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              spreadRadius: 1.0,
+              blurRadius: 4.0,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              project.name,
+              style:
+                  const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 6.0),
+            Text(
+              'Story Count: $storyCount',
+              style: const TextStyle(
+                  fontSize: 14.0, color: CustomColors.subTextColor),
+            ),
+            const SizedBox(height: 6.0),
+            Text(
+              'Task Count: $completedTasks/$taskCount',
+              style: const TextStyle(
+                  fontSize: 14.0, color: CustomColors.subTextColor),
+            ),
+            const SizedBox(height: 6.0),
+            Text(
+              'Time Spent: ${project.spentTime}',
+              style: const TextStyle(
+                  fontSize: 14.0, color: CustomColors.subTextColor),
+            ),
+            const SizedBox(height: 12.0),
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Delete Project'),
+                      content: const Text(
+                          'Are you sure you want to delete this project?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            context
+                                .read<ProjectsBloc>()
+                                .add(DeleteProjectEvent(project.id));
+                            Navigator.of(context).pop();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: CustomColors.deleteButtonColor),
+                          child: const Text(
+                            'Delete',
+                            style: TextStyle(color: CustomColors.red),
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              context
-                                  .read<ProjectsBloc>()
-                                  .add(DeleteProjectEvent(project.id));
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('Delete'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                style: ElevatedButton.styleFrom(primary: Colors.red),
-                child: const Text('Delete Project'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: CustomColors.deleteButtonColor),
+              child: const Text(
+                'Delete Project',
+                style: TextStyle(color: CustomColors.red),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

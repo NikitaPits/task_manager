@@ -39,26 +39,19 @@ class _ProjectsPageState extends State<ProjectsPage> {
               return const Center(child: Text('Something went wrong'));
             }
             if (state is LoadingSucceed) {
-              return CustomScrollView(
-                slivers: [
-                  SliverGrid(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      childAspectRatio: 2 / 2,
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        if (index < state.projects.length) {
-                          return ProjectCard(project: state.projects[index]);
-                        } else {
-                          return const CreateProjectWidget();
-                        }
-                      },
-                      childCount: state.projects.length + 1,
-                    ),
+              return SingleChildScrollView(
+                child: Center(
+                  child: Wrap(
+                    spacing: 20.0,
+                    runSpacing: 20.0,
+                    children: [
+                      ...state.projects
+                          .map((project) => ProjectCard(project: project))
+                          .toList(),
+                      const CreateProjectWidget(),
+                    ],
                   ),
-                ],
+                ),
               );
             }
             return Container();

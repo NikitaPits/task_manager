@@ -21,7 +21,7 @@ class _CreateProjectWidgetState extends State<CreateProjectWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
+      width: 250,
       child: _isFlipped ? _buildBackCard() : _buildFrontCard(),
     );
   }
@@ -33,10 +33,20 @@ class _CreateProjectWidgetState extends State<CreateProjectWidget> {
           _isFlipped = true;
         });
       },
-      child: const Card(
-        color: CustomColors.createWidgetBgColor,
-        elevation: 2.0,
-        child: Padding(
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomColors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1.0,
+              blurRadius: 4.0,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: const Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -53,55 +63,77 @@ class _CreateProjectWidgetState extends State<CreateProjectWidget> {
   }
 
   Widget _buildBackCard() {
-    return Card(
-      elevation: 2.0,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Project Name',
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      CustomColors.createWidgetBgColor)),
-              onPressed: () {
-                String projectName = _nameController.text.trim();
-                if (projectName.isNotEmpty) {
-                  Project newProject = Project(
-                    id: _uuid.v4(),
-                    name: projectName,
-                  );
-                  saveProjectsToLocalStorage(newProject);
-                  setState(() {
-                    _isFlipped = false;
-                  });
-                  context.read<ProjectsBloc>().add(GetProjectsEvent());
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Error'),
-                      content: const Text('Please enter a project name.'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              },
-              child: const Text('Create Project'),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        setState(() {
+          _isFlipped = false;
+        });
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomColors.widgetsBgColor,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1.0,
+              blurRadius: 4.0,
+              offset: const Offset(0, 2),
             ),
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Project Name',
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: CustomColors.createWidgetBgColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                ),
+                onPressed: () {
+                  String projectName = _nameController.text.trim();
+                  if (projectName.isNotEmpty) {
+                    Project newProject = Project(
+                      id: _uuid.v4(),
+                      name: projectName,
+                    );
+                    saveProjectsToLocalStorage(newProject);
+                    setState(() {
+                      _isFlipped = false;
+                    });
+                    context.read<ProjectsBloc>().add(GetProjectsEvent());
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Error'),
+                        content: const Text('Please enter a project name.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Create Project'),
+              ),
+            ],
+          ),
         ),
       ),
     );

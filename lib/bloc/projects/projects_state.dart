@@ -9,6 +9,14 @@ class Loading extends ProjectsState {}
 
 class LoadingFailed extends ProjectsState {}
 
+class ProjectUpdating extends ProjectsState {}
+
+class ProjectUpdated extends ProjectsState {
+  final Project project;
+
+  ProjectUpdated(this.project);
+}
+
 class LoadingSucceed extends ProjectsState {
   final List<Project> projects;
 

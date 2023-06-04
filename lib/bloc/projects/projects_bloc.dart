@@ -27,5 +27,16 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
         emit(LoadingFailed());
       }
     });
+    on<UpdateProject>((event, emit) async {
+      try {
+        emit(ProjectUpdating());
+        await updateProjectById(event.project.id, event.project);
+        emit(Loading());
+        List<Project> projects = await getProjectsFromLocalStorage();
+        emit(LoadingSucceed(projects));
+      } catch (e) {
+        emit(LoadingFailed());
+      }
+    });
   }
 }

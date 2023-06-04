@@ -4,13 +4,14 @@ class Project {
   String id;
   String name;
   List<Story> stories;
-  double spentTime = 0;
+  double spentTime;
 
-  Project(
-      {required this.id,
-      required this.name,
-      this.stories = const [],
-      this.spentTime = 0});
+  Project({
+    required this.id,
+    required this.name,
+    this.stories = const [],
+    this.spentTime = 0,
+  });
 
   void addStory(Story story) {
     stories.add(story);
@@ -24,5 +25,19 @@ class Project {
   String toString() {
     String storyList = stories.map((story) => '- ${story.name}').join('\n');
     return 'Project ID: $id\nName: $name\nStories:\n$storyList\nSpent Time: $spentTime hours';
+  }
+
+  Project copyWith({
+    String? id,
+    String? name,
+    List<Story>? stories,
+    double? spentTime,
+  }) {
+    return Project(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      stories: stories ?? this.stories,
+      spentTime: spentTime ?? this.spentTime,
+    );
   }
 }
