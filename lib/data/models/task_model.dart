@@ -1,16 +1,16 @@
 class Task {
   String id;
   String title;
-  String description;
-  DateTime dueDate;
+  String? description;
+  // DateTime dueDate;
   bool isCompleted;
-  double spentTime;
+  double? spentTime;
 
   Task({
     required this.id,
     required this.title,
     this.description = '',
-    required this.dueDate,
+    // required this.dueDate,
     this.isCompleted = false,
     this.spentTime = 0,
   });
@@ -31,9 +31,9 @@ class Task {
     description = newDescription;
   }
 
-  void updateDueDate(DateTime newDueDate) {
-    dueDate = newDueDate;
-  }
+  // void updateDueDate(DateTime newDueDate) {
+  //   dueDate = newDueDate;
+  // }
 
   void updateSpentTime(double newSpentTime) {
     spentTime = newSpentTime;
@@ -44,7 +44,7 @@ class Task {
       'id': id,
       'title': title,
       'description': description,
-      'dueDate': dueDate.toIso8601String(),
+      // 'dueDate': dueDate.toIso8601String(),
       'isCompleted': isCompleted,
       'spentTime': spentTime,
     };
@@ -55,14 +55,13 @@ class Task {
       id: map['id'],
       title: map['title'],
       description: map['description'],
-      dueDate: DateTime.parse(map['dueDate']),
+      // dueDate: DateTime.parse(map['dueDate']),
       isCompleted: map['isCompleted'],
       spentTime: map['spentTime'],
     );
   }
 
-  @override
-  String toString() {
-    return 'Task: $title\nDescription: $description\nDue Date: $dueDate\nCompleted: $isCompleted\nSpent Time: $spentTime hours';
-  }
+  // String toString() {
+  //   return 'Task: $title\nDescription: $description\nDue Date: $dueDate\nCompleted: $isCompleted\nSpent Time: $spentTime hours';
+  // }
 }

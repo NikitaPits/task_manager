@@ -16,7 +16,7 @@ class ProjectDetailsBloc
       emit(ProjectIsLoading());
       try {
         Project? project = await getProjectById(event.projectId);
-        log(project.toString());
+        log('project.toString() ${project.toString()}');
         if (project != null) {
           emit(ProjectLoaded(project));
         } else {
@@ -30,9 +30,11 @@ class ProjectDetailsBloc
     on<UpdateProjectDetailsEvent>((event, emit) async {
       try {
         emit(ProjectUpdating());
+
         await updateProjectById(event.project.id, event.project);
         emit(ProjectIsLoading());
         Project? project = await getProjectById(event.project.id);
+        log('project ${project?.stories[0].tasks.toString()}');
         if (project != null) {
           emit(ProjectLoaded(project));
           if (event.mounted) {

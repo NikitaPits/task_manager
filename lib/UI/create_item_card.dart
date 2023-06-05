@@ -41,14 +41,14 @@ class CreateItemPopUp extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add Story'),
+          title: Text(title),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
-                  labelText: 'Story Name',
+                  labelText: 'Enter Name',
                 ),
               ),
             ],

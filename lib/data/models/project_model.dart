@@ -21,6 +21,16 @@ class Project {
     stories.remove(story);
   }
 
+  void updateStory(Story story) {
+    stories = stories.map((element) {
+      if (element.id == story.id) {
+        return story;
+      } else {
+        return element;
+      }
+    }).toList();
+  }
+
   @override
   String toString() {
     String storyList = stories.map((story) => '- ${story.name}').join('\n');

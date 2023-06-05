@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/data/models/project_model.dart';
 import 'package:task_manager/data/models/story_model.dart';
+import 'package:task_manager/data/models/task_model.dart';
 
 Future<void> saveProjectsToLocalStorage(Project project) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -30,10 +31,17 @@ Future<List<Project>> getProjectsFromLocalStorage() async {
       List<Project> projects = projectList.map((project) {
         List<dynamic> storyList = project['stories'] ?? [];
         List<Story> stories = storyList.map((story) {
+          List<dynamic> taskList = story['tasks'] ?? [];
+          List<Task> tasks = taskList.map((task) {
+            return Task(
+              title: task['title'],
+              id: task['id'],
+            );
+          }).toList();
           return Story(
             id: story['id'],
             name: story['name'],
-            // Add other story fields here
+            tasks: tasks,
           );
         }).toList();
 
@@ -73,11 +81,10 @@ Future<void> updateProjectById(String projectId, Project updatedProject) async {
         return {
           'id': story.id,
           'name': story.name,
-          // Add other story fields here
+          'tasks': story.tasks,
         };
       }).toList(),
       'spentTime': project.spentTime,
-      // Add other project fields here
     };
   }).toList();
 

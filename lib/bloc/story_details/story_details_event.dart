@@ -9,11 +9,3 @@ class LoadStoryEvent extends StoryDetailsEvent {
 
   LoadStoryEvent(this.stroyId, this.project);
 }
-
-class UpdateProjectDetailsEvent extends StoryDetailsEvent {
-  final Project project;
-  final BuildContext context;
-  final bool mounted;
-
-  UpdateProjectDetailsEvent(this.project, this.context, this.mounted);
-}

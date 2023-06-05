@@ -64,33 +64,35 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   ),
                   const SizedBox(height: 8.0),
                   Expanded(
-                    child: Wrap(
-                      spacing: 16.0,
-                      runSpacing: 16.0,
-                      children: [
-                        ...state.selectedProject.stories
-                            .map((story) => StoryCard(story: story))
-                            .toList(),
-                        CreateItemPopUp(
-                          title: 'Add Story',
-                          onCreate: (name) {
-                            String storyId = const Uuid().v4();
-                            Story newStory = Story(
-                              id: storyId,
-                              name: name,
-                            );
-                            context.read<ProjectDetailsBloc>().add(
-                                UpdateProjectDetailsEvent(
-                                    state.selectedProject.copyWith(stories: [
-                                      ...state.selectedProject.stories,
-                                      newStory
-                                    ]),
-                                    context,
-                                    mounted));
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
+                    child: SingleChildScrollView(
+                      child: Wrap(
+                        spacing: 16.0,
+                        runSpacing: 16.0,
+                        children: [
+                          ...state.selectedProject.stories
+                              .map((story) => StoryCard(story: story))
+                              .toList(),
+                          CreateItemPopUp(
+                            title: 'Add Story',
+                            onCreate: (name) {
+                              String storyId = const Uuid().v4();
+                              Story newStory = Story(
+                                id: storyId,
+                                name: name,
+                              );
+                              state.selectedProject.addStory(newStory);
+                              context.read<ProjectDetailsBloc>().add(
+                                    UpdateProjectDetailsEvent(
+                                      state.selectedProject,
+                                      context,
+                                      mounted,
+                                    ),
+                                  );
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
