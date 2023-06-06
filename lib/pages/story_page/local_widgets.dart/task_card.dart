@@ -3,9 +3,11 @@ import 'package:task_manager/data/models/task_model.dart';
 import 'package:task_manager/theme/custom_colors.dart';
 
 class TaskCard extends StatelessWidget {
+  final void Function(Task) onComplete;
   final Task task;
 
-  const TaskCard({Key? key, required this.task}) : super(key: key);
+  const TaskCard({Key? key, required this.task, required this.onComplete})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,24 +31,39 @@ class TaskCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              task.title,
-              style:
-                  const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  task.title,
+                  style: const TextStyle(
+                      fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  height: 10,
+                  width: 10,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: task.isCompleted
+                        ? CustomColors.indicatorComplete
+                        : CustomColors.red,
+                  ),
+                )
+              ],
             ),
             const SizedBox(height: 6.0),
             const SizedBox(height: 6.0),
             ElevatedButton(
               onPressed: () {
-                // Handle button press
+                onComplete(task);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: CustomColors.deleteButtonColor,
-                foregroundColor: CustomColors.red,
+                backgroundColor: CustomColors.completeButton,
+                foregroundColor: CustomColors.bottomAppBarColor,
               ),
               child: const Text(
-                'Delete Task',
-                style: TextStyle(color: CustomColors.red),
+                'Complete Task',
+                style: TextStyle(color: CustomColors.completeButtonText),
               ),
             ),
           ],

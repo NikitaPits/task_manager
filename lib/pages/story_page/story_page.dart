@@ -78,7 +78,8 @@ class _StoryPageState extends State<StoryPage> {
                       runSpacing: 16.0,
                       children: [
                         ...state.story.tasks
-                            .map((story) => TaskCard(task: story))
+                            .map((story) => TaskCard(
+                                task: story, onComplete: onCompleteTask))
                             .toList(),
                         CreateItemPopUp(
                           title: 'Add a task',
@@ -118,5 +119,21 @@ class _StoryPageState extends State<StoryPage> {
           .add(UpdateProjectDetailsEvent(widget.project, context, mounted));
     }
     Navigator.pop(context);
+  }
+
+  onCompleteTask(Task task) {
+    task.complete();
+    var storyState = context.read<StoryDetailsBloc>().state;
+    if (storyState is StroyDetailsLoaded) {
+      Story story = storyState.story;
+      story.updateTask(task);
+      log(story.tasks.first.isCompleted.toString());
+      log(story.tasks.first.id.toString());
+      widget.project.updateStory(story);
+      context.read<StoryDetailsBloc>().add(UpdateStoryEvent(story));
+      context
+          .read<ProjectDetailsBloc>()
+          .add(UpdateProjectDetailsEvent(widget.project, context, mounted));
+    }
   }
 }

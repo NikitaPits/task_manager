@@ -35,6 +35,7 @@ Future<List<Project>> getProjectsFromLocalStorage() async {
           List<Task> tasks = taskList.map((task) {
             return Task(
               title: task['title'],
+              isCompleted: task['isCompleted'],
               id: task['id'],
             );
           }).toList();
@@ -89,6 +90,7 @@ Future<void> updateProjectById(String projectId, Project updatedProject) async {
   }).toList();
 
   String projectsJson = jsonEncode(projectList);
+
   await prefs.setString('projects', projectsJson);
 }
 
@@ -112,7 +114,7 @@ Future<void> deleteProjectById(String projectId) async {
 
 Future<Project?> getProjectById(String projectId) async {
   List<Project> savedProjects = await getProjectsFromLocalStorage();
-
+  log(savedProjects.toString());
   Project? foundProject;
 
   for (Project project in savedProjects) {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class Task {
   String id;
   String title;
@@ -40,6 +42,7 @@ class Task {
   }
 
   Map<String, dynamic> toMap() {
+    log('isCompleted: ${isCompleted.toString()}');
     return {
       'id': id,
       'title': title,

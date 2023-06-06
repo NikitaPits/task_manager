@@ -21,6 +21,16 @@ class Story {
     tasks.remove(task);
   }
 
+  void updateTask(Task task) {
+    tasks = tasks.map((element) {
+      if (element.id == task.id) {
+        return task;
+      } else {
+        return element;
+      }
+    }).toList();
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

@@ -27,7 +27,7 @@ class StoryCard extends StatelessWidget {
       child: Container(
         width: 250,
         decoration: BoxDecoration(
-          color: CustomColors.widgetsBgColor,
+          color: CustomColors.storyCardBg,
           borderRadius: BorderRadius.circular(8.0),
           boxShadow: [
             BoxShadow(
@@ -63,7 +63,7 @@ class StoryCard extends StatelessWidget {
                 foregroundColor: CustomColors.red,
               ),
               child: const Text(
-                'Delete Story',
+                'Close Story',
                 style: TextStyle(color: CustomColors.red),
               ),
             ),
