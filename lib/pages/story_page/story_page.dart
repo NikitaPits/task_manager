@@ -38,7 +38,7 @@ class _StoryPageState extends State<StoryPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: CustomColors.appBarColor,
-        title: const Text('Project Details'),
+        title: const Text('Story Details'),
       ),
       body: BlocBuilder<StoryDetailsBloc, StoryDetailsState>(
         builder: (context, state) {
@@ -104,15 +104,14 @@ class _StoryPageState extends State<StoryPage> {
   onCreateTask(String name) {
     var storyState = context.read<StoryDetailsBloc>().state;
     if (storyState is StroyDetailsLoaded) {
-      Story storyToAdd = storyState.story.copyWith(tasks: [
-        ...storyState.story.tasks,
-        Task(
-          title: name,
-          id: const Uuid().v4(),
-        )
-      ]);
-      widget.project.updateStory(storyToAdd);
+      Story story = storyState.story;
+      story.addTask(Task(
+        title: name,
+        id: const Uuid().v4(),
+      ));
 
+      widget.project.updateStory(story);
+      context.read<StoryDetailsBloc>().add(UpdateStoryEvent(story));
       log('Tasks in project to update ${widget.project.stories.first.tasks.toString()}');
       context
           .read<ProjectDetailsBloc>()

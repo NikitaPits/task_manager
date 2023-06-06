@@ -13,5 +13,8 @@ class StoryDetailsBloc extends Bloc<StoryDetailsEvent, StoryDetailsState> {
           .firstWhere((story) => story.id == event.stroyId);
       emit(StroyDetailsLoaded(selectedStory));
     });
+    on<UpdateStoryEvent>((event, emit) {
+      emit(StroyDetailsLoaded(event.story));
+    });
   }
 }

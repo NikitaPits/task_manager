@@ -9,3 +9,9 @@ class LoadStoryEvent extends StoryDetailsEvent {
 
   LoadStoryEvent(this.stroyId, this.project);
 }
+
+class UpdateStoryEvent extends StoryDetailsEvent {
+  final Story story;
+
+  UpdateStoryEvent(this.story);
+}

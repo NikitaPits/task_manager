@@ -81,7 +81,7 @@ Future<void> updateProjectById(String projectId, Project updatedProject) async {
         return {
           'id': story.id,
           'name': story.name,
-          'tasks': story.tasks,
+          'tasks': story.tasks.map((task) => task.toMap()).toList(),
         };
       }).toList(),
       'spentTime': project.spentTime,

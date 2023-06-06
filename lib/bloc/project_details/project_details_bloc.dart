@@ -44,6 +44,7 @@ class ProjectDetailsBloc
           emit(ProjectLoadingFailed());
         }
       } catch (e) {
+        log('UpdateProjectDetailsEvent ${e.toString()}');
         emit(ProjectLoadingFailed());
       }
     });

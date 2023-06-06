@@ -45,7 +45,7 @@ class TaskCard extends StatelessWidget {
                 foregroundColor: CustomColors.red,
               ),
               child: const Text(
-                'Delete Story',
+                'Delete Task',
                 style: TextStyle(color: CustomColors.red),
               ),
             ),
