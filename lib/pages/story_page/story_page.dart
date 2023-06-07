@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/UI/create_item_card.dart';
+import 'package:task_manager/UI/indicators/progress_bar.dart';
 import 'package:task_manager/bloc/project_details/project_details_bloc.dart';
 import 'package:task_manager/bloc/story_details/story_details_bloc.dart';
 import 'package:task_manager/data/models/project_model.dart';
@@ -40,64 +41,88 @@ class _StoryPageState extends State<StoryPage> {
         backgroundColor: CustomColors.appBarColor,
         title: const Text('Story Details'),
       ),
-      body: BlocBuilder<StoryDetailsBloc, StoryDetailsState>(
-        builder: (context, state) {
-          if (state is StroyDetailsLoaded) {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    state.story.name,
-                    style: const TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  Text(
-                    'Total Time Spent: ${state.story.timeSpent}',
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  const Text(
-                    'Tasks:',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  Expanded(
-                    child: Wrap(
-                      spacing: 16.0,
-                      runSpacing: 16.0,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg_image.png'),
+            fit: BoxFit.cover,
+            opacity: 0.2,
+          ),
+        ),
+        child: BlocBuilder<StoryDetailsBloc, StoryDetailsState>(
+          builder: (context, state) {
+            if (state is StroyDetailsLoaded) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ...state.story.tasks
-                            .map((story) => TaskCard(
-                                task: story, onComplete: onCompleteTask))
-                            .toList(),
-                        CreateItemPopUp(
-                          title: 'Add a task',
-                          onCreate: onCreateTask,
+                        Text(
+                          state.story.name,
+                          style: const TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Spacer(),
+                        Expanded(
+                          child: ProgressBar(
+                            data: state.story,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            );
-          } else if (state is ProjectIsLoading) {
+                    const SizedBox(height: 16.0),
+                    Text(
+                      'Total Time Spent: ${state.story.timeSpent}',
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    const Text(
+                      'Tasks:',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Expanded(
+                      child: Center(
+                        child: SingleChildScrollView(
+                          child: Wrap(
+                            spacing: 16.0,
+                            runSpacing: 16.0,
+                            children: [
+                              ...state.story.tasks
+                                  .map((story) => TaskCard(
+                                      task: story, onComplete: onCompleteTask))
+                                  .toList(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    CreateItemPopUp(
+                      title: 'Add a task',
+                      onCreate: onCreateTask,
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is ProjectIsLoading) {
+              return Container();
+            } else if (state is ProjectLoadingFailed) {
+              return const Center(child: Text('Something went wrong'));
+            }
             return Container();
-          } else if (state is ProjectLoadingFailed) {
-            return const Center(child: Text('Something went wrong'));
-          }
-          return Container();
-        },
+          },
+        ),
       ),
     );
   }

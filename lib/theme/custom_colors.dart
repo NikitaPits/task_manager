@@ -14,4 +14,5 @@ class CustomColors {
   static const Color completeButtonText = Color(0xFF685000);
   static const Color indicatorComplete = Color(0xFF03D330);
   static const Color storyCardBg = Color(0xFF579AC7);
+  static const Color progressBar = Color(0xFFffc501);
 }

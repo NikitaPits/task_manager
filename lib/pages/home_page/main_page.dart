@@ -31,11 +31,28 @@ class _MainPageState extends State<MainPage> {
               ],
             )),
       ),
-      body: const Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(child: Text('Main page')),
-        ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg_main.png'),
+            fit: BoxFit.cover,
+            opacity: 0.3,
+          ),
+        ),
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+                child: Text(
+              'Welcome to your personal Task Manager!',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w900,
+              ),
+            )),
+          ],
+        ),
       ),
     );
   }

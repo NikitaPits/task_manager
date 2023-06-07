@@ -26,36 +26,49 @@ class _ProjectsPageState extends State<ProjectsPage> {
         backgroundColor: CustomColors.appBarColor,
         title: const Center(child: Text('Projects')),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(
-          MediaQuery.of(context).size.width / 30,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg_image.png'),
+            fit: BoxFit.cover,
+            opacity: 0.3,
+          ),
         ),
-        child: BlocBuilder<ProjectsBloc, ProjectsState>(
-          builder: (context, state) {
-            if (state is Loading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state is LoadingFailed) {
-              return const Center(child: Text('Something went wrong'));
-            }
-            if (state is LoadingSucceed) {
-              return SingleChildScrollView(
-                child: Center(
-                  child: Wrap(
-                    spacing: 20.0,
-                    runSpacing: 20.0,
-                    children: [
-                      ...state.projects
-                          .map((project) => ProjectCard(project: project))
-                          .toList(),
-                      const CreateProjectWidget(),
-                    ],
-                  ),
-                ),
-              );
-            }
-            return Container();
-          },
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(
+                MediaQuery.of(context).size.width / 30,
+              ),
+              child: BlocBuilder<ProjectsBloc, ProjectsState>(
+                builder: (context, state) {
+                  if (state is Loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (state is LoadingFailed) {
+                    return const Center(child: Text('Something went wrong'));
+                  }
+                  if (state is LoadingSucceed) {
+                    return SingleChildScrollView(
+                      child: Center(
+                        child: Wrap(
+                          spacing: 20.0,
+                          runSpacing: 20.0,
+                          children: [
+                            ...state.projects
+                                .map((project) => ProjectCard(project: project))
+                                .toList(),
+                            const CreateProjectWidget(),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
