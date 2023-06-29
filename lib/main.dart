@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/bloc/page_controller/page_controller_bloc.dart';
 import 'package:task_manager/bloc/project_details/project_details_bloc.dart';
@@ -7,6 +8,8 @@ import 'package:task_manager/bloc/story_details/story_details_bloc.dart';
 import 'package:task_manager/home.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SchedulerBinding.instance.addPostFrameCallback((_) {});
   runApp(const MyApp());
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/data/models/task_model.dart';
+import 'package:task_manager/pages/story_page/local_widgets.dart/task_card_button.dart';
 import 'package:task_manager/theme/custom_colors.dart';
 
 class TaskCard extends StatelessWidget {
@@ -34,10 +35,16 @@ class TaskCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  task.title,
-                  style: const TextStyle(
-                      fontSize: 18.0, fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    task.title,
+                    softWrap: true,
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
                 Container(
                   height: 10,
@@ -53,18 +60,9 @@ class TaskCard extends StatelessWidget {
             ),
             const SizedBox(height: 6.0),
             const SizedBox(height: 6.0),
-            ElevatedButton(
-              onPressed: () {
-                onComplete(task);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: CustomColors.completeButton,
-                foregroundColor: CustomColors.bottomAppBarColor,
-              ),
-              child: const Text(
-                'Complete Task',
-                style: TextStyle(color: CustomColors.completeButtonText),
-              ),
+            TaskButtonWidget(
+              task: task,
+              onComplete: onComplete,
             ),
           ],
         ),

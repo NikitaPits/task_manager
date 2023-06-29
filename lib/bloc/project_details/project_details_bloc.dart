@@ -34,8 +34,7 @@ class ProjectDetailsBloc
         await updateProjectById(event.project.id, event.project);
         emit(ProjectIsLoading());
         Project? project = await getProjectById(event.project.id);
-        log('project ${project?.stories[0].tasks.first.isCompleted.toString()}');
-        log('project ${project?.stories[0].tasks.first.id.toString()}');
+
         if (project != null) {
           emit(ProjectLoaded(project));
           if (event.mounted) {
@@ -46,6 +45,7 @@ class ProjectDetailsBloc
         }
       } catch (e) {
         log('UpdateProjectDetailsEvent ${e.toString()}');
+
         emit(ProjectLoadingFailed());
       }
     });

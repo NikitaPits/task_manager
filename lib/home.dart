@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/bloc/page_controller/page_controller_bloc.dart';
+import 'package:task_manager/data/models/bottom_app_bar_item_model.dart';
 import 'package:task_manager/data/models/page_model.dart';
-import 'package:task_manager/data/models/widgets_models/bottom_app_bar_item_model.dart';
 import 'package:task_manager/pages/home_page/local_widgets/bottum_app_bar_element.dart';
 import 'package:task_manager/pages/home_page/main_page.dart';
 import 'package:task_manager/pages/projects_page/projects_page.dart';

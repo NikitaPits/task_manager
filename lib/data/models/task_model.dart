@@ -4,7 +4,6 @@ class Task {
   String id;
   String title;
   String? description;
-  // DateTime dueDate;
   bool isCompleted;
   double? spentTime;
 
@@ -21,7 +20,7 @@ class Task {
     isCompleted = true;
   }
 
-  void uncomplete() {
+  void uncompleted() {
     isCompleted = false;
   }
 
